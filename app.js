@@ -1,10 +1,18 @@
 const express = require('express');
 const app = express();
-const multer = require('multer')
+const multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: './upload',
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+
 const upload = multer({
-    dest: 'uploads/'
-})
-const path = require('path')
+    storage: storage
+});
+const path = require('path');
 
 app.get('/', (req, res) => {
     res.send('Root');
