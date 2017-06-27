@@ -8,7 +8,7 @@ import { FileUploader } from 'ng2-file-upload';
 })
 export class FileUploaderComponent implements OnInit {
 
-  uploader = new FileUploader({ url: 'http://localhost:8000/upload' });
+  uploader = new FileUploader({ url: 'http://35.189.85.67:8080/upload' });
 
   public hasBaseDropZoneOver: boolean = false;
   public hasAnotherDropZoneOver: boolean = false;
