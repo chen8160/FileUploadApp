@@ -18,7 +18,8 @@ export class ImageService {
   }
 
   prepEndpoint(ep) {
-    return 'http://localhost:8080/' + ep;
+    // return 'http://localhost:8080/' + ep;
+    return ep;
   }
 
 }

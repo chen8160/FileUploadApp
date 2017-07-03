@@ -12,6 +12,8 @@
         <label for="file">Choose a file</label>
         <br>
         <span class="drag">Or Drag File Here</span>
+        <br>
+        <span class="help-block">Only <strong>.jpeg/.jpg/.png</strong> Files</span>
       </div>
     </div>
 
@@ -33,8 +35,8 @@
         <tbody>
           <tr *ngFor="let item of uploader.queue">
             <td><strong>{{ item?.file?.name }}</strong></td>
-            <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-            <td *ngIf="uploader.isHTML5">
+            <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+            <td *ngIf="uploader.options.isHTML5">
               <div class="progress" style="margin-bottom: 0;">
                 <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
               </div>

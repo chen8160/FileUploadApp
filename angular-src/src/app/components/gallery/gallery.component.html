@@ -1,4 +1,28 @@
-<p>
-  gallery works!
-</p>
-<img *ngFor="let url of urls" src={{url.url}}>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-6">
+      <div class="col-xs-12 col-md-6">
+        <a href="#" class="thumbnail" *ngFor="let url of url1">
+          <img src={{url.url}} alt="...">
+        </a>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <a href="#" class="thumbnail" *ngFor="let url of url2"> 
+          <img src={{url.url}} alt="...">
+        </a>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="col-xs-12 col-md-6">
+        <a href="#" class="thumbnail" *ngFor="let url of url3">
+          <img src={{url.url}} alt="...">
+        </a>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <a href="#" class="thumbnail" *ngFor="let url of url4">
+          <img src={{url.url}} alt="...">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
