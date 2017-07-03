@@ -66,7 +66,8 @@ app.post('/upload', (req, res) => {
 
         let newImage = new Image({
             filename: req.file.filename,
-            url: 'http://localhost:8080/get/' + req.file.filename
+            // url: 'http://localhost:8080/get/' + req.file.filename
+            url: 'get/' + req.file.filename
         });
 
         Image.addImage(newImage, (err, image) => {
@@ -99,4 +100,4 @@ app.get('/getAllimgs', (req, res) => {
 });
 
 
-app.listen(8080);
+app.listen(process.env.PORT || 8080);

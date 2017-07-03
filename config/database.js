@@ -1,5 +1,5 @@
 module.exports = {
-    //database: 'mongodb://brad:brad@ds121190.mlab.com:21190/meanauthapp',   //prod
-    database: 'mongodb://localhost:27017/fileuploader', //dev
+    database: 'mongodb://chen:chen@ds145952.mlab.com:45952/fileuploader', //prod
+    // database: 'mongodb://localhost:27017/fileuploader', //dev
     secret: 'yoursecret'
 }
