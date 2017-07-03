@@ -2,25 +2,38 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
 import { FileDropDirective, FileSelectDirective } from "ng2-file-upload";
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
+import { GalleryComponent } from './components/gallery/gallery.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+
+import { ImageService } from './services/image.service';
+
+const appRoutes: Routes = [
+  { path: '', component: FileUploaderComponent },
+  { path: 'gallery', component: GalleryComponent }
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     FileDropDirective,
     FileSelectDirective,
-    FileUploaderComponent
+    FileUploaderComponent,
+    GalleryComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [ImageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

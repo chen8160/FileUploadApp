@@ -1,17 +1,36 @@
 const express = require('express');
 const app = express();
 const multer = require('multer');
+const mime = require('mime');
+const mongoose = require('mongoose');
+const config = require('./config/database');
+const Image = require('./models/image');
 
 var storage = multer.diskStorage({
     destination: './upload',
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now())
+        cb(null, file.fieldname + '-' + Date.now() +
+            '.' + mime.extension(file.mimetype))
     }
 });
+
 const upload = multer({
     storage: storage
 }).single('file');
 const path = require('path');
+
+// Connect To Database
+mongoose.connect(config.database);
+
+// On Connection
+mongoose.connection.on('connected', () => {
+    console.log('Connected to database ' + config.database);
+});
+
+// On Error
+mongoose.connection.on('error', (err) => {
+    console.log('Database error: ' + err);
+});
 
 //create a cors middleware
 app.use(function (req, res, next) {
@@ -32,8 +51,11 @@ app.get('/', (req, res) => {
 
 app.post('/upload', (req, res) => {
 
+    console.log(req.file);
+
     upload(req, res, function (err) {
-        console.log(req.file);
+        console.log(req.file.filename);
+
         if (err) {
             res.json({
                 error_code: 1,
@@ -41,18 +63,40 @@ app.post('/upload', (req, res) => {
             });
             return;
         }
-        res.json({
-            error_code: 0,
-            err_desc: null
+
+        let newImage = new Image({
+            filename: req.file.filename,
+            url: 'http://localhost:8080/get/' + req.file.filename
+        });
+
+        Image.addImage(newImage, (err, image) => {
+            if (err) {
+                res.json({
+                    success: false,
+                    msg: 'Failed to upload image'
+                });
+            } else {
+                res.json({
+                    success: true,
+                    msg: 'Image uploaded',
+                    error_code: 0,
+                    err_desc: null
+                });
+            }
         });
     });
 });
 
 app.get('/get/:filename', (req, res) => {
-    console.log();
-    res.setHeader('Content-Type', 'text/plain; charset=UTF-8');
-    res.sendFile(path.join(__dirname, 'uploads/') + req.params.filename);
+    res.sendFile(path.join(__dirname, 'upload/') + req.params.filename);
+});
+
+app.get('/getAllimgs', (req, res) => {
+    let images = Image.getAllimgs((err, images) => {
+        if (err) throw err;
+        res.json(images);
+    });
 });
 
 
-app.listen(8000);
+app.listen(8080);
