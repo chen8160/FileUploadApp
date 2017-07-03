@@ -208,7 +208,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var FileUploaderComponent = (function () {
     function FileUploaderComponent() {
         this.uploader = new __WEBPACK_IMPORTED_MODULE_1_ng2_file_upload__["FileUploader"]({
-            url: 'http://localhost:8080/upload', isHTML5: true, allowedMimeType: ["image/jpeg", "image/png"]
+            url: 'upload', isHTML5: true, allowedMimeType: ["image/jpeg", "image/png"]
         });
         this.hasBaseDropZoneOver = false;
         this.hasAnotherDropZoneOver = false;
