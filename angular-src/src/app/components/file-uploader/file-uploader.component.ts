@@ -9,7 +9,7 @@ import { FileUploader } from 'ng2-file-upload';
 export class FileUploaderComponent implements OnInit {
 
   uploader = new FileUploader({
-    url: 'http://localhost:8080/upload', isHTML5: true, allowedMimeType: ["image/jpeg", "image/png"]
+    url: 'upload', isHTML5: true, allowedMimeType: ["image/jpeg", "image/png"]
   });
 
   public hasBaseDropZoneOver: boolean = false;
