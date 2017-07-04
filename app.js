@@ -5,6 +5,9 @@ const mime = require('mime');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 const Image = require('./models/image');
+var compression = require('compression');
+
+app.use(compression());
 
 var storage = multer.diskStorage({
     destination: './upload',
