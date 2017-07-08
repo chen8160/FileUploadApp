@@ -15,7 +15,8 @@ import { ImageService } from './services/image.service';
 import { HomeComponent } from './components/home/home.component';
 
 const appRoutes: Routes = [
-  { path: '', component: FileUploaderComponent },
+  { path: '', component: HomeComponent },
+  { path: 'upload', component: FileUploaderComponent },
   { path: 'gallery', component: GalleryComponent }
 ];
 
