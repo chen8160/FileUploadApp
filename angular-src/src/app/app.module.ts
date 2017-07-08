@@ -12,6 +12,7 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 import { ImageService } from './services/image.service';
+import { HomeComponent } from './components/home/home.component';
 
 const appRoutes: Routes = [
   { path: '', component: FileUploaderComponent },
@@ -26,6 +27,7 @@ const appRoutes: Routes = [
     FileUploaderComponent,
     GalleryComponent,
     NavbarComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,33 +1,24 @@
 const express = require('express');
 const app = express();
-const multer = require('multer');
-const mime = require('mime');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 const Image = require('./models/image');
+const path = require('path');
+const users = require('./routes/users');
+const passport = require('passport');
+const bodyParser = require('body-parser');
+
 var compression = require('compression');
+var upload = require('./config/imageStore');
 
 app.use(compression());
 
-var storage = multer.diskStorage({
-    destination: './upload',
-    filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() +
-            '.' + mime.extension(file.mimetype))
-    }
-});
-
-const upload = multer({
-    storage: storage
-}).single('file');
-const path = require('path');
-
 // Connect To Database
-mongoose.connect(config.database);
+mongoose.connect(config.database[process.env.NODE_ENV || "dev"]);
 
 // On Connection
 mongoose.connection.on('connected', () => {
-    console.log('Connected to database ' + config.database);
+    console.log('Connected to database ' + config.database[process.env.NODE_ENV || "dev"]);
 });
 
 // On Error
@@ -47,6 +38,16 @@ app.use(function (req, res, next) {
 
 app.use(express.static('./public'));
 
+//Body Parser Middleware
+app.use(bodyParser.json());
+
+//Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
+
+app.use('/users', users);
 
 app.get('/', (req, res) => {
     res.send('Root');

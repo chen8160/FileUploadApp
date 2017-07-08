@@ -23,6 +23,7 @@ export class GalleryComponent implements OnInit {
   ngOnInit() {
     this.imageService.getImageUrls().subscribe(urls => {
       urls.forEach((url, index) => {
+        url.url = "http://localhost:8080/" + url.url;
         if (index % 4 == 0) this.url1.push(url);
         if (index % 4 == 1) this.url2.push(url);
         if (index % 4 == 2) this.url3.push(url);
