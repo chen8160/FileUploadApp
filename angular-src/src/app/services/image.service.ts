@@ -12,7 +12,7 @@ export class ImageService {
   getImageUrls() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    let ep = this.prepEndpoint('getAllimgs');
+    let ep = this.prepEndpoint('files/getAllimgs');
     return this.http.get(ep, { headers: headers })
       .map(res => res.json());
   }

@@ -2,14 +2,13 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const config = require('./config/database');
-const Image = require('./models/image');
 const path = require('path');
 const users = require('./routes/users');
+const files = require('./routes/files');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 
 var compression = require('compression');
-var upload = require('./config/imageStore');
 
 app.use(compression());
 
@@ -49,58 +48,10 @@ require('./config/passport')(passport);
 
 app.use('/users', users);
 
+app.use('/files', files);
+
 app.get('/', (req, res) => {
     res.send('Root');
-});
-
-app.post('/upload', (req, res) => {
-
-    console.log(req.file);
-
-    upload(req, res, function (err) {
-        console.log(req.file.filename);
-
-        if (err) {
-            res.json({
-                error_code: 1,
-                err_desc: err
-            });
-            return;
-        }
-
-        let newImage = new Image({
-            filename: req.file.filename,
-            // url: 'http://localhost:8080/get/' + req.file.filename
-            url: 'get/' + req.file.filename
-        });
-
-        Image.addImage(newImage, (err, image) => {
-            if (err) {
-                res.json({
-                    success: false,
-                    msg: 'Failed to upload image'
-                });
-            } else {
-                res.json({
-                    success: true,
-                    msg: 'Image uploaded',
-                    error_code: 0,
-                    err_desc: null
-                });
-            }
-        });
-    });
-});
-
-app.get('/get/:filename', (req, res) => {
-    res.sendFile(path.join(__dirname, 'upload/') + req.params.filename);
-});
-
-app.get('/getAllimgs', (req, res) => {
-    let images = Image.getAllimgs((err, images) => {
-        if (err) throw err;
-        res.json(images);
-    });
 });
 
 app.get('*', (req, res) => {
